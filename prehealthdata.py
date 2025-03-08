@@ -13,7 +13,7 @@ load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-llm = ChatGroq(model_name="llama-3.3-70b-versatile")
+llm = ChatGroq(model_name="deepseek-r1-distill-llama-70b")
 
 
 class PreHealthData(BaseModel):
@@ -36,9 +36,9 @@ def PreHealthDataOutput(stress):
     Stress percentage = {stress}
 
     Stress Level	    Stress Percentage	Recommended Sleep Duration
-    Low Stress	            50 - 65	                     7-9 hours
-    Medium Stress	        65 - 85	                    8-9.5 hours
-    High Stress	            85 - 100	                8.5-10 hours
+    low                     50 - 65	                     7-9 hours
+    moderate                65 - 85	                    8-9.5 hours
+    high                    85 - 100	                8.5-10 hours
 
     Explanation:
     Below 50% probability → Non-stressed (not considered stressed at all).
