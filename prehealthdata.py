@@ -1,19 +1,15 @@
 import os
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
-from langchain_huggingface import HuggingFaceEmbeddings
-from langchain.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
 from pydantic import BaseModel, Field
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
-from fastapi import HTTPException
 
 load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-llm = ChatGroq(model_name="deepseek-r1-distill-llama-70b")
+llm = ChatGroq(model_name="llama-3.3-70b-versatile")
 
 
 class PreHealthData(BaseModel):
@@ -28,9 +24,9 @@ parser = PydanticOutputParser(pydantic_object=PreHealthData)
 
 def PreHealthDataOutput(stress):
     template = """You will be given stress percentage and you have to provide:
-    isStressed: bool = Field(description='Is the user stressed?')
+    isStressed: bool = Field(description='Is the user stressed?') Only give ['True' or 'False']
     percentStressed: float = Field(description='Percentage of stress')
-    stressLevel: str = Field(description='Stress level of the user')
+    stressLevel: str = Field(description='Stress level of the user') Only give ['low', 'moderate', 'high']
     remedies: str = Field(description='Remedies for the stress level')
     Give me these three outputs only based on the stress percentage:
     Stress percentage = {stress}
